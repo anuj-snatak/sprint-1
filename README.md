@@ -1,5 +1,5 @@
 
-## ⚙ Virtual Environment Setup Documentation
+##  Virtual Environment Setup Documentation
 
 ---
 
