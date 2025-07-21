@@ -26,7 +26,7 @@ A **virtual environment** is an isolated Python environment that allows you to i
 
 ---
 
-## 🛠 Installation Steps
+##  Installation Steps
 
 ### 1. Install `venv` (if not already installed)
 
@@ -114,7 +114,7 @@ myproject/
 
 ---
 
-## ⚠ Notes & Best Practices
+##  Notes & Best Practices
 
 * Always **add `.venv/` to `.gitignore`** so it doesn't get pushed to GitHub.
 * Use `requirements.txt` to recreate the same environment later:
