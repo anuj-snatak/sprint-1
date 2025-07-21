@@ -2,39 +2,6 @@
 #  Virtual Environment Setup Documentation (Ubuntu/Debian)
 
 ---
-## Table of Contents
-
-What is a Virtual Environment?
-
-Prerequisites
-
-Installation Steps
-
-Install venv
-
-Create a Virtual Environment
-
-Activate the Virtual Environment
-
-Install Python Packages
-
-Freeze Requirements
-
-Deactivate the Environment
-
-Typical Project Structure
-
-Notes & Best Practices
-
-References
-
-
-
-##  What is a Virtual Environment?
-
-A **virtual environment** is an isolated Python environment that allows you to install packages without affecting the system-wide Python installation. It’s useful for managing dependencies on a per-project basis.
-
----
 
 ## Version History
 
@@ -45,6 +12,30 @@ A **virtual environment** is an isolated Python environment that allows you to i
 ---
 
 
+##  Table of Contents
+
+1. [What is a Virtual Environment?](#-what-is-a-virtual-environment)
+2. [Prerequisites](#-prerequisites)
+3. [Installation Steps](#-installation-steps)
+
+   * [Install `venv`](#1-install-venv-if-not-already-installed)
+   * [Create a Virtual Environment](#2-create-a-virtual-environment)
+   * [Activate the Virtual Environment](#3-activate-the-virtual-environment)
+   * [Install Python Packages](#4-install-python-packages)
+   * [Freeze Requirements](#5-freeze-requirements-optional-but-recommended)
+   * [Deactivate the Environment](#6-deactivate-the-environment)
+4. [Typical Project Structure](#-typical-project-structure)
+5. [Notes & Best Practices](#-notes--best-practices)
+6. [References](#-references)
+
+---
+
+##  What is a Virtual Environment?
+
+A **virtual environment** is an isolated Python environment that allows you to install packages without affecting the system-wide Python installation. It’s useful for managing dependencies on a per-project basis.
+
+---
+
 ##  Prerequisites
 
 * Ubuntu/Debian-based system
@@ -53,7 +44,7 @@ A **virtual environment** is an isolated Python environment that allows you to i
 
 ---
 
-##  Installation Steps
+## 🛠️ Installation Steps
 
 ### 1. Install `venv` (if not already installed)
 
@@ -129,7 +120,7 @@ deactivate
 
 ---
 
-##  Typical Project Structure
+## Typical Project Structure
 
 ```
 myproject/
@@ -163,7 +154,7 @@ pip install -r requirements.txt
 ---
 
 
-##  References
+## References
 
 * **Python venv Docs**: [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html)
 * **pip Docs**: [https://pip.pypa.io/en/stable/](https://pip.pypa.io/en/stable/)
