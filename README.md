@@ -2,6 +2,33 @@
 #  Virtual Environment Setup Documentation (Ubuntu/Debian)
 
 ---
+## Table of Contents
+
+What is a Virtual Environment?
+
+Prerequisites
+
+Installation Steps
+
+Install venv
+
+Create a Virtual Environment
+
+Activate the Virtual Environment
+
+Install Python Packages
+
+Freeze Requirements
+
+Deactivate the Environment
+
+Typical Project Structure
+
+Notes & Best Practices
+
+References
+
+
 
 ##  What is a Virtual Environment?
 
