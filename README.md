@@ -44,7 +44,7 @@ A **virtual environment** is an isolated Python environment that allows you to i
 
 ---
 
-## 🛠️ Installation Steps
+##  Installation Steps
 
 ### 1. Install `venv` (if not already installed)
 
