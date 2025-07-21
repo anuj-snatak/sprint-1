@@ -1,6 +1,4 @@
 
----
-
 #  Virtual Environment Setup Documentation (Ubuntu/Debian)
 
 ---
@@ -10,6 +8,15 @@
 A **virtual environment** is an isolated Python environment that allows you to install packages without affecting the system-wide Python installation. It’s useful for managing dependencies on a per-project basis.
 
 ---
+
+## Version History
+
+| Author      | Created on | Version   | Last updated by | Internal Reviewer |
+|-------------|------------|-----------|------------------|--------------------|
+| Anuj Jain   | 17-07-25   | version 1 | N/A              | Prashnat           |
+
+---
+
 
 ##  Prerequisites
 
@@ -119,6 +126,15 @@ pip install -r requirements.txt
 * If you're using VS Code, it auto-detects `.venv` and activates it.
 
 ---
+
+## Contact Information
+
+| Name      | Email Address                                               |
+| --------- | ----------------------------------------------------------- |
+| Anuj Jain | [anuj.jain@mygurukulam.co](mailto:anuj.jain@mygurukulam.co) |
+
+---
+
 
 ##  References
 
