@@ -1,8 +1,6 @@
 
 #  Virtual Environment Setup Documentation
 
----
-
 ## Version History
 
 | Author      | Created on | Version   | Last updated by | Internal Reviewer |
