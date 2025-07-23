@@ -1,5 +1,5 @@
 
-#  Virtual Environment Setup Documentation (Ubuntu/Debian)
+#  Virtual Environment Setup Documentation
 
 ---
 
