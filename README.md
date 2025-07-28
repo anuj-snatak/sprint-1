@@ -1,161 +1,238 @@
-
-#  Virtual Environment Setup Documentation
-
-## Version History
-
-| Author      | Created on | Version   | Last updated by | Internal Reviewer |
-|-------------|------------|-----------|------------------|--------------------|
-| Anuj Jain   | 17-07-25   | version 1 | N/A              | Prashnat           |
+# Notification API - Complete Setup Documentation (As per Application Template)
 
 ---
 
+## Author Details
 
-##  Table of Contents
-
-1. [What is a Virtual Environment?](#-what-is-a-virtual-environment)
-2. [Prerequisites](#-prerequisites)
-3. [Installation Steps](#-installation-steps)
-
-   * [Install `venv`](#1-install-venv-if-not-already-installed)
-   * [Create a Virtual Environment](#2-create-a-virtual-environment)
-   * [Activate the Virtual Environment](#3-activate-the-virtual-environment)
-   * [Install Python Packages](#4-install-python-packages)
-   * [Freeze Requirements](#5-freeze-requirements-optional-but-recommended)
-   * [Deactivate the Environment](#6-deactivate-the-environment)
-4. [Typical Project Structure](#-typical-project-structure)
-5. [Notes & Best Practices](#-notes--best-practices)
-6. [References](#-references)
+| Author    | Created On | Version | Last Updated By | Last Edited On |
+| --------- | ---------- | ------- | --------------- | -------------- |
+| Anuj Jain | 28-07-2025 | v1      | Anuj Jain       | 28-07-2025     |
 
 ---
 
-##  What is a Virtual Environment?
+## Purpose
 
-A **virtual environment** is an isolated Python environment that allows you to install packages without affecting the system-wide Python installation. It’s useful for managing dependencies on a per-project basis.
-
----
-
-##  Prerequisites
-
-* Ubuntu/Debian-based system
-* Python 3 installed (`python3 --version`)
-* `pip` installed (`pip3 --version`)
+The purpose of the Notification API is to handle and manage all notification-related functionality across different modules of the application. This includes sending emails, SMS, and other user alerts in a decoupled and event-driven manner. The idea behind building this service was to centralize all notification logic, make it reusable, scalable, and easier to maintain.
 
 ---
 
-##  Installation Steps
+## Pre-requisites
 
-### 1. Install `venv` (if not already installed)
+### System Requirements
+
+| Hardware Specifications | Minimum Recommendation |
+| ----------------------- | ---------------------- |
+| Processor               | Dual-core              |
+| RAM                     | 4 GB                   |
+| Disk                    | 20 GB                  |
+| OS                      | Ubuntu 22.04           |
+
+### Dependencies
+
+#### Build Time Dependencies
+
+| Name    | Version | Description                     |
+| ------- | ------- | ------------------------------- |
+| Node.js | 18.x    | Required for running the server |
+| Docker  | 20.x    | For containerization            |
+| Git     | latest  | For source code management      |
+
+#### Run Time Dependencies
+
+| Name           | Version | Description                          |
+| -------------- | ------- | ------------------------------------ |
+| MongoDB        | 6.x     | To store logs and notification data  |
+| Kafka          | 3.x     | For event-driven message consumption |
+| Mailgun/Twilio | Any     | To send Email/SMS                    |
+
+#### Other Dependencies
+
+| Name    | Version | Description                     |
+| ------- | ------- | ------------------------------- |
+| dotenv  | latest  | Environment variable management |
+| winston | latest  | For logging                     |
+
+### Important Ports
+
+#### Inbound Traffic
+
+| Port | Description      |
+| ---- | ---------------- |
+| 9042 | Used by ScyllaDB |
+
+#### Outbound Traffic
+
+| Port | Description         |
+| ---- | ------------------- |
+| 8080 | Used by Express API |
+
+---
+
+## Architecture
+
+> !\[Architecture Diagram Placeholder]
+
+(Insert system-level architecture diagram showing notification flow from event source to Email/SMS delivery)
+
+---
+
+## Dataflow Diagram
+
+**Explanation**: Whenever a service (like User or Order) triggers an event (e.g., user signup or order placed), that event is sent to Kafka. Notification API listens to those events, processes them using predefined templates, and delivers the final message to the user using the right channel (Email/SMS).
+
+---
+
+## Step-by-step Installation of Notification API
+
+### Step 1: Install Software Dependencies
+
+#### Build Time
 
 ```bash
-sudo apt update
-sudo apt install python3-venv -y
+sudo apt install git
+sudo apt install docker docker-compose
 ```
 
-### 2. Create a Virtual Environment
-
-Navigate to your project folder:
+#### Run Time
 
 ```bash
-cd ~/myproject
+sudo apt install mongodb
+sudo systemctl start mongodb
 ```
 
-Now create a virtual environment named `.venv`:
+#### Other Dependencies
 
 ```bash
-python3 -m venv .venv
+npm install dotenv winston
 ```
 
->  This will create a `.venv/` folder inside your project containing the isolated environment.
-
----
-
-### 3. Activate the Virtual Environment
-
-* **On Linux/macOS:**
+### Step 2: Build / Artifact Generation
 
 ```bash
-source .venv/bin/activate
+git clone https://github.com/OT-MICROSERVICES/notification-api.git
+cd notification-api
+npm install
 ```
 
-* **On Windows (CMD):**
-
-```cmd
-.venv\Scripts\activate.bat
-```
-
->  You’ll notice the terminal prompt changes to show the environment is active, e.g.,
-> `(.venv) user@system:~/myproject$`
-
----
-
-### 4. Install Python Packages
-
-While the virtual environment is active:
+### Step 3: Application Deployment
 
 ```bash
-pip install flask requests pandas
+docker-compose up --build
+```
+
+```bash
+# Validate the app
+curl http://localhost:8080/health
 ```
 
 ---
 
-### 5. Freeze Requirements (optional but recommended)
+## Monitoring
 
-To save the environment's dependencies in a file:
+Monitoring helps track performance, usage, and errors.
 
-```bash
-pip freeze > requirements.txt
-```
+### Metrics
 
----
-
-### 6. Deactivate the Environment
-
-To exit the virtual environment:
-
-```bash
-deactivate
-```
-
----
-
-## Typical Project Structure
-
-```
-myproject/
-├── .venv/              # Virtual environment directory
-├── app.py              # Main Python script
-├── requirements.txt    # List of dependencies
-└── README.md
-```
+| Parameter          | Description              | Priority | Threshold              |
+| ------------------ | ------------------------ | -------- | ---------------------- |
+| Disk Utilization   | Disk space usage         | High     | > 90%                  |
+| Availability       | Uptime percentage        | High     | >= 99.9%               |
+| Memory Utilization | RAM usage                | Medium   | > 80%                  |
+| CPU Utilization    | CPU time usage           | Medium   | > 70%                  |
+| Network Traffic    | Data in/out              | Medium   | Varies per use-case    |
+| Latency            | API response time        | High     | < 300ms                |
+| Errors             | Error rate               | High     | > 5/min                |
+| Throughput         | Requests per minute      | High     | > 1000 req/min         |
+| Security           | Auth + Encryption health | High     | Must be enabled always |
 
 ---
 
-##  Notes & Best Practices
+## Health Checks
 
-* Always **add `.venv/` to `.gitignore`** so it doesn't get pushed to GitHub.
-* Use `requirements.txt` to recreate the same environment later:
+| Name         | Type           | InitialDelaySeconds | PeriodSeconds | TimeoutSeconds | SuccessThreshold | FailureThreshold |
+| ------------ | -------------- | ------------------- | ------------- | -------------- | ---------------- | ---------------- |
+| notification | ReadinessProbe | 10                  | 10            | 5              | 1                | 3                |
+| notification | LivenessProbe  | 10                  | 10            | -              | 5                | 1                |
 
-```bash
-pip install -r requirements.txt
-```
+**Explanation of Parameters**
 
-* If you're using VS Code, it auto-detects `.venv` and activates it.
+* **ReadinessProbe**: Checks if app is ready to receive requests.
+* **LivenessProbe**: Checks if app is running.
+* **InitialDelaySeconds**: Delay before first check.
+* **PeriodSeconds**: Time between checks.
+* **TimeoutSeconds**: Max wait time.
+* **SuccessThreshold**: Minimum success before OK.
+* **FailureThreshold**: Failure count before restart.
+
+---
+
+## Logging
+
+| Log Type            | Path             | Description                    |
+| ------------------- | ---------------- | ------------------------------ |
+| Event Logs          | /logs/event.log  | Logs related to system actions |
+| Authentication Logs | /logs/access.log | Tracks login/auth activities   |
+| Server Logs         | /logs/server.log | Server-side logs and errors    |
+| Threat Logs         | /logs/threat.log | Security threats and alerts    |
+
+---
+
+## Disaster Recovery (DR)
+
+In case of a crash (due to attack, failure, or disaster), the service should:
+
+* Backup logs and templates regularly
+* Use Docker to re-deploy quickly
+* Kafka replay feature to restore undelivered messages
+
+---
+
+## High Availability (HA)
+
+* Use replicas and load balancer
+* Deploy on multiple zones
+* Keep service stateless where possible
+
+> DR is for recovery **after** failure. HA is for preventing downtime in the **first place**.
+
+---
+
+## Troubleshooting
+
+| Issue                        | Solution                                    |
+| ---------------------------- | ------------------------------------------- |
+| Email not sending            | Check Mailgun API key                       |
+| Kafka not consuming messages | Check topic name and consumer group config  |
+| `.env` values not loaded     | Ensure `dotenv.config()` is present in code |
+| Service not starting         | Check `docker-compose logs` for errors      |
+
+---
+
+## FAQs
+
+**Q: Is this application free?**
+Yes, it’s completely open-source.
+
+**Q: Can I deploy this on any cloud?**
+Yes, it can be deployed on any platform like AWS, Azure, GCP.
+
+**Q: Is there an enterprise version?**
+No, currently only open-source version is available.
 
 ---
 
 ## Contact Information
 
-| Name      | Email Address                                               |
-| --------- | ----------------------------------------------------------- |
-| Anuj Jain | [anuj.jain@mygurukulam.co](mailto:anuj.jain@mygurukulam.co) |
+| Name      | Email                                             |
+| --------- | ------------------------------------------------- |
+| Anuj Jain | [anuj@mygurukulam.co](mailto:anuj@mygurukulam.co) |
 
 ---
-
 
 ## References
 
-* **Python venv Docs**: [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html)
-* **pip Docs**: [https://pip.pypa.io/en/stable/](https://pip.pypa.io/en/stable/)
-
----
-
+| Link                                                                                                                                                                         | Description                          |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| [https://github.com/OT-MICROSERVICES/documentation-template/wiki/Application-Template](https://github.com/OT-MICROSERVICES/documentation-template/wiki/Application-Template) | Base template followed               |
+| [https://www.jenkins.io/doc/book/installing/linux/#debianubuntu](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)                                             | Format reference for system sections |
+| [https://amplifi.com/user-guide/FAQs.html](https://amplifi.com/user-guide/FAQs.html)                                                                                         | Structure idea for FAQs section      |
